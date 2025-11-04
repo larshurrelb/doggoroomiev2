@@ -152,25 +152,9 @@ class RemoteController {
 
     sendTrigger(key) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-            // Send the sound command based on the key
-            let soundCommand = key;
-            switch(key) {
-                case '1': soundCommand = 'play-idle-sound'; break;
-                case '2': soundCommand = 'play-puppyeyes-sound'; break;
-                case '3': soundCommand = 'play-intensestare-sound'; break;
-                case '4': soundCommand = 'play-happy-sound'; break;
-                case '5': soundCommand = 'play-panting-sound'; break;
-                case '6': soundCommand = 'play-sigh-sound'; break;
-                case '7': soundCommand = 'play-barking-sound'; break;
-                case '8': soundCommand = 'play-woofing-sound'; break;
-                case '9': soundCommand = 'play-bumping-sound'; break;
-                case '0': soundCommand = 'play-gazetotheright-sound'; break;
-                case 'ß': soundCommand = 'play-gazetotheleft-sound'; break;
-                case 'i': soundCommand = 'stop-all-audio'; break;
-            }
-            
-            this.ws.send(soundCommand);
-            console.log(`Sent trigger: ${soundCommand}`);
+            // Send just the key - tablet expects single character triggers
+            this.ws.send(key);
+            console.log(`Sent trigger: ${key}`);
             
             const triggerName = this.triggerMap[key];
             if (triggerName) {
