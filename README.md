@@ -59,9 +59,18 @@ termux-setup-storage
 ```
 
 #### 3. Transfer Project Files to Tablet
+**IMPORTANT:** You must build the project on your Mac/PC FIRST, then transfer to tablet!
+
+```bash
+# ON YOUR MAC/PC: Build the production bundle first
+cd tablet-server
+npm install
+npm run build    # This creates the dist/ folder needed for offline use
+```
+
 Option A - Using USB cable:
 - Connect tablet to computer
-- Copy the `tablet-server` folder to tablet storage
+- Copy the **entire** `tablet-server` folder to tablet storage (including `dist/` folder!)
 - In Termux: `cd /sdcard/tablet-server`
 
 Option B - Using git:
@@ -69,7 +78,10 @@ Option B - Using git:
 cd ~
 git clone [your-repo-url]
 cd doggoroomiev2/tablet-server
+# Build must be done on Mac before pushing to git, OR run npm run build here (needs internet)
 ```
+
+**⚠️ CRITICAL:** The `dist/` folder contains the bundled Rive library for offline use. Without it, the tablet will need internet to load animations!
 
 #### 4. Copy Binary Files
 ```bash
@@ -85,15 +97,23 @@ cp /sdcard/Download/1.wav public/audio/1.wav
 ```bash
 cd ~/tablet-server  # or wherever you placed the files
 npm install
+
+# NOTE: Do NOT run "npm run build" on the tablet - it should already have
+# the dist/ folder from when you built it on your Mac/PC
 ```
 
 #### 6. Build for Offline Use
+**⚠️ SKIP THIS STEP ON TABLET** - You should have already built on your Mac/PC!
+
+The `dist/` folder should already exist from when you built the project before transferring.
+
+If for some reason you need to rebuild (and have internet on tablet):
 ```bash
-# Build the production bundle (includes Rive library offline)
+# Only if absolutely necessary (requires internet)
 npm run build
 ```
 
-**Note:** The app now works completely offline by bundling the `@rive-app/canvas` package. See `OFFLINE_SETUP.md` for detailed information about the build process.
+**Note:** The app works completely offline by bundling the `@rive-app/canvas` package. The build MUST be done on Mac/PC before transferring to tablet. See `OFFLINE_SETUP.md` for details.
 
 #### 7. Configure Network Settings
 Edit `config.js` to match your hotspot network:
