@@ -87,7 +87,15 @@ cd ~/tablet-server  # or wherever you placed the files
 npm install
 ```
 
-#### 6. Configure Network Settings
+#### 6. Build for Offline Use
+```bash
+# Build the production bundle (includes Rive library offline)
+npm run build
+```
+
+**Note:** The app now works completely offline by bundling the `@rive-app/canvas` package. See `OFFLINE_SETUP.md` for detailed information about the build process.
+
+#### 7. Configure Network Settings
 Edit `config.js` to match your hotspot network:
 ```javascript
 export const CONFIG = {
@@ -113,12 +121,19 @@ export const CONFIG = {
 #### 9. Start the Server
 ```bash
 cd ~/tablet-server
+
+# Production mode (serves bundled files from dist/)
+NODE_ENV=production npm start
+
+# OR development mode (serves from public/)
 npm start
 ```
 
 You should see:
 ```
 🤖 DoggoRoomie Server v2.0
+Mode: Production
+Serving from: dist
 Server running on: http://0.0.0.0:3000
 Valetudo: http://192.168.43.2
 Arduino: http://192.168.43.5
@@ -261,10 +276,17 @@ Health check endpoint
 - express: ^4.18.2
 - cors: ^2.8.5
 - ws: ^8.14.2
+- @rive-app/canvas: ^2.32.0 (bundled for offline use)
+- vite: ^7.1.12 (dev dependency for bundling)
 
 ### Laptop Controller
 - Vanilla JavaScript (no dependencies)
 - Works in any modern browser
+
+## 📖 Additional Documentation
+
+- **OFFLINE_SETUP.md** - Detailed guide on the offline Rive bundling setup
+- **COPY_FILES.md** - Instructions for copying binary files
 
 ## 🎨 Original Project
 

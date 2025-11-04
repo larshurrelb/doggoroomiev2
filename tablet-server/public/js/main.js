@@ -1,3 +1,5 @@
+import { Rive, Fit, Alignment } from '@rive-app/canvas';
+
 // Wake Lock to keep screen on
 let wakeLock = null;
 
@@ -122,13 +124,13 @@ const init = async () => {
         }, false);
 
         // Initialize Rive animation
-        const r = new rive.Rive({
+        const r = new Rive({
             src: '/dog_animations.riv',
             canvas: canvas,
             autoplay: true,
             stateMachines: "State Machine",
-            fit: rive.Fit.Cover, // Use Cover to fill entire screen
-            alignment: rive.Alignment.Center,
+            fit: Fit.Cover, // Use Cover to fill entire screen
+            alignment: Alignment.Center,
             onLoad: () => {
                 message.style.display = 'none';
                 currentInputs = r.stateMachineInputs('State Machine');

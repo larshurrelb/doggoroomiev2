@@ -4,10 +4,15 @@ import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import os from 'os';
 import { CONFIG } from './config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Determine which directory to serve based on environment
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const staticDir = isDevelopment ? 'public' : 'dist';
 
 const app = express();
 const server = createServer(app);
@@ -26,7 +31,7 @@ const wsClients = new Set();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(join(__dirname, 'public')));
+app.use(express.static(join(__dirname, staticDir)));
 
 // WebSocket connection handler
 wss.on('connection', (ws) => {
@@ -152,6 +157,99 @@ app.post('/control', async (req, res) => {
     }
 });
 
+// Network information endpoint
+app.get('/network-info', async (req, res) => {
+    try {
+        const networkInterfaces = os.networkInterfaces();
+        const hostname = os.hostname();
+        const platform = os.platform();
+        const uptime = os.uptime();
+        
+        // Get all non-internal IPv4 addresses
+        const interfaces = [];
+        let primaryIp = 'Unknown';
+        
+        for (const [name, addrs] of Object.entries(networkInterfaces)) {
+            if (!addrs) continue;
+            
+            for (const addr of addrs) {
+                // Skip internal/loopback addresses for primary IP detection
+                if (!addr.internal && addr.family === 'IPv4') {
+                    if (primaryIp === 'Unknown') {
+                        primaryIp = addr.address;
+                    }
+                    
+                    interfaces.push({
+                        name: name,
+                        address: addr.address,
+                        family: addr.family,
+                        mac: addr.mac,
+                        internal: addr.internal
+                    });
+                }
+            }
+        }
+        
+        // Try to get connected devices (this is limited without root access on Android)
+        // We can try using ARP table or connected clients info
+        let connectedDevices = [];
+        
+        // On Android/Termux, we can try to read ARP table
+        // Note: This requires shell access and may not work on all systems
+        try {
+            const { exec } = await import('child_process');
+            const { promisify } = await import('util');
+            const execPromise = promisify(exec);
+            
+            // Try to read ARP table (works on Linux/Android)
+            const { stdout } = await execPromise('cat /proc/net/arp 2>/dev/null || arp -a 2>/dev/null || echo ""');
+            
+            if (stdout) {
+                const lines = stdout.split('\n').slice(1); // Skip header
+                for (const line of lines) {
+                    const parts = line.trim().split(/\s+/);
+                    if (parts.length >= 4 && parts[0] && parts[0] !== '0.0.0.0') {
+                        const ip = parts[0];
+                        const mac = parts[3];
+                        
+                        // Skip incomplete or invalid entries
+                        if (mac && mac !== '00:00:00:00:00:00' && !mac.includes('incomplete')) {
+                            connectedDevices.push({
+                                ip: ip,
+                                mac: mac
+                            });
+                        }
+                    }
+                }
+            }
+        } catch (arpError) {
+            console.log('Could not read ARP table (expected on some systems):', arpError.message);
+        }
+        
+        res.json({
+            tablet: {
+                hostname: hostname,
+                ip: primaryIp,
+                platform: platform,
+                uptime: uptime,
+                interfaces: interfaces
+            },
+            connectedDevices: connectedDevices,
+            websocketClients: wsClients.size,
+            config: {
+                valetudoHost: CONFIG.VALETUDO_HOST,
+                arduinoHost: CONFIG.ARDUINO_HOST
+            }
+        });
+    } catch (error) {
+        console.error('Error getting network info:', error);
+        res.status(500).json({ 
+            error: 'Failed to get network information',
+            message: error.message 
+        });
+    }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ 
@@ -166,6 +264,8 @@ server.listen(PORT, '0.0.0.0', () => {
     console.log(`===========================================`);
     console.log(`🤖 DoggoRoomie Server v2.0`);
     console.log(`===========================================`);
+    console.log(`Mode: ${isDevelopment ? 'Development' : 'Production'}`);
+    console.log(`Serving from: ${staticDir}`);
     console.log(`Server running on: http://0.0.0.0:${PORT}`);
     console.log(`Valetudo: ${VALETUDO_HOST}`);
     console.log(`Arduino: ${ARDUINO_HOST}`);
