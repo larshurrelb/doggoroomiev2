@@ -142,11 +142,10 @@ export const CONFIG = {
 ```bash
 cd ~/tablet-server
 
-# Production mode (serves bundled files from dist/)
-NODE_ENV=production npm start
+# ⚠️ IMPORTANT: ALWAYS use production mode on tablet for offline use
+NODE_ENV=production node server.js
 
-# OR development mode (serves from public/)
-npm start
+# DO NOT use "npm start" - that's development mode and requires internet!
 ```
 
 You should see:
@@ -159,6 +158,10 @@ Valetudo: http://192.168.43.2
 Arduino: http://192.168.43.5
 WebSocket ready for connections
 ```
+
+**Key indicators it's working offline:**
+- Mode: **Production** (not Development)
+- Serving from: **dist** (not public)
 
 #### 10. Access Tablet UI
 - Open browser on tablet (Chrome recommended for best compatibility)
