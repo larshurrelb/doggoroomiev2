@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoggoRoomie Remote Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>🤖 DoggoRoomie Remote Controller</h1>
+        <div class="connection-info">
+            <input type="text" id="serverAddress" placeholder="192.168.43.1:3000" value="192.168.43.1:3000">
+            <button id="connectBtn" class="btn-connect">Connect</button>
+            <div class="status-indicator">
+                <div class="status-dot" id="connection-status"></div>
+                <span id="connection-text">Disconnected</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="controls-panel">
+            <h2>Controls</h2>
+            
+            <div class="control-section">
+                <h3>Movement Controls</h3>
+                <div class="control-group">
+                    <h4>Robot Movement</h4>
+                    <ul class="controls-list">
+                        <li><span class="key">Space</span> Toggle controls</li>
+                        <li><span class="key">W</span> or <span class="key">↑</span> Forward</li>
+                        <li><span class="key">S</span> or <span class="key">↓</span> Backward</li>
+                        <li><span class="key">A</span> or <span class="key">←</span> Left</li>
+                        <li><span class="key">D</span> or <span class="key">→</span> Right</li>
+                    </ul>
+                </div>
+                
+                <div class="control-group">
+                    <h4>Tail Speed</h4>
+                    <ul class="controls-list">
+                        <li><span class="key">T</span> Slow</li>
+                        <li><span class="key">Z</span> Normal</li>
+                        <li><span class="key">U</span> Fast</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h3>Face Controls</h3>
+                <ul class="controls-list">
+                    <li><span class="key">1</span> Idle</li>
+                    <li><span class="key">2</span> Puppy eyes</li>
+                    <li><span class="key">3</span> Staring</li>
+                    <li><span class="key">4</span> Happy</li>
+                    <li><span class="key">5</span> Panting</li>
+                    <li><span class="key">6</span> Sighing</li>
+                    <li><span class="key">7</span> Barking</li>
+                    <li><span class="key">8</span> Woofing</li>
+                    <li><span class="key">9</span> Bumping</li>
+                    <li><span class="key">0</span> Gaze left</li>
+                    <li><span class="key">ß</span> Gaze right</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="display-panel">
+            <div class="preview-notice">
+                <h3>📱 Preview on Tablet</h3>
+                <p>Animation is displayed on the tablet screen</p>
+            </div>
+            <div id="status" class="inactive">Status: Ready</div>
+            <div id="keyPressed">No key pressed</div>
+            <div id="triggerStatus">Current Trigger: None</div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>

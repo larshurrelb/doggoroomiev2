@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Environment
+.env
+.env.local
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Termux specific
+.termux/
+
+# Logs
+*.log
+logs/

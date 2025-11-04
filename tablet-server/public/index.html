@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoggoRoomie Control - Tablet</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div id="message">Loading animation...</div>
+    <canvas id="canvas"></canvas>
+    
+    <!-- Audio Elements for each animation -->
+    <audio id="soundSlowBreathing" loop>
+        <source src="/sounds/idle/slow_breathing.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundWhimpering" loop>
+        <source src="/sounds/puppyEyes/low_whimpering_dog.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundLowGrowling" loop>
+        <source src="/sounds/intenseStaring/low_growling_dog.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundExcitedPanting" loop>
+        <source src="/sounds/happy/panting_high-pitched.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundPanting" loop>
+        <source src="/sounds/panting/slow_panting_dog_sou.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundSigh">
+        <source src="/sounds/sigh/dog_sigh.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundBarking">
+        <source src="/sounds/barking/barking_dog.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundWoofing">
+        <source src="/sounds/woofing/woof.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundImpatientGrowling" loop>
+        <source src="/sounds/bumping/impatient_dog_growli.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="soundSneezeRight">
+        <source src="/sounds/gazeToTheRight/548465__dienamyte__small-dog-sneezing.wav" type="audio/wav">
+    </audio>
+    <audio id="soundSneezeLeft">
+        <source src="/sounds/gazeToTheLeft/548465__dienamyte__small-dog-sneezing.wav" type="audio/wav">
+    </audio>
+    
+    <!-- Audio initialization button -->
+    <button id="audioInitButton" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10000; padding: 20px 40px; font-size: 18px; background: #667eea; color: white; border: none; border-radius: 10px; cursor: pointer;">
+        Tap to Start
+    </button>
+
+    <script src="https://unpkg.com/@rive-app/canvas@2.20.0"></script>
+    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/control.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "doggoroomie-tablet-server",
+  "version": "2.0.0",
+  "description": "Tablet-based robot controller server running on Termux",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["robot", "controller", "termux"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "ws": "^8.14.2"
+  }
+}
