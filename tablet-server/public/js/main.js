@@ -127,6 +127,8 @@ const init = async () => {
             canvas: canvas,
             autoplay: true,
             stateMachines: "State Machine",
+            fit: rive.Fit.Cover, // Use Cover to fill entire screen
+            alignment: rive.Alignment.Center,
             onLoad: () => {
                 message.style.display = 'none';
                 currentInputs = r.stateMachineInputs('State Machine');

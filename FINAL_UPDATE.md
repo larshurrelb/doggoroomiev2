@@ -7,11 +7,11 @@ The tablet's face display has been upgraded with all the features from your orig
 ### 🆕 New Features Added
 
 #### 1. **Fullscreen Display** 🖥️
-- Tablet now shows ONLY the dog face animation in fullscreen
-- No UI controls, status bars, or distractions
-- Black background for immersive display
-- Touch anywhere to trigger fullscreen
-- Automatic fullscreen on first interaction
+   - Clean, immersive fullscreen face on tablet
+   - No UI elements - just the dog animation
+   - Dog color background (#BB7638) - no black bars
+   - Uses Rive Fit.Cover to fill entire screen
+   - Touch to trigger fullscreen
 
 #### 2. **Wake Lock** 🔒
 - Screen stays on automatically while app is running

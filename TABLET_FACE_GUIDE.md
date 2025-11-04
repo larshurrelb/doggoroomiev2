@@ -7,7 +7,8 @@ The tablet's localhost:3000 display now includes:
 ### 🖥️ **Fullscreen Display**
 - Automatically enters fullscreen on first touch
 - No UI elements - just the dog face animation
-- Black background for immersive display
+- Dog color background (#BB7638) fills any space not covered by animation
+- Canvas uses Fit.Cover to fill entire screen without black bars
 - Responsive to device orientation changes
 
 ### 🔒 **Screen Wake Lock**
